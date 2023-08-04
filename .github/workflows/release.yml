@@ -24,6 +24,5 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ github.ref_name }}.tar.gz
-          asset_name: ${{ github.ref_name }}
           tag: ${{ github.ref }}
           overwrite: true
