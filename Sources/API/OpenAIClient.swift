@@ -25,6 +25,7 @@ public class OpenAIClient {
         apiKey: String?
     ) async throws -> String {
         guard let url = URL(string: "https://api.openai.com/v1/chat/completions") else { throw OpenAIError.invalidURL }
+        
         var request = URLRequest(url: url)
         request.httpMethod = HTTPMethod.post.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")

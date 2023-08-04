@@ -1,0 +1,31 @@
+name: Create Release
+
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build executable for release
+        run: swift build -c release --arch arm64 --arch x86_64 --product chatgpt
+
+      - name: Compress archive
+        run: tar -czf ${{ github.ref_name }}.tar.gz -C .build/apple/Products/Release chatgpt
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
