@@ -19,14 +19,11 @@ jobs:
       - name: Compress archive
         run: tar -czf ${{ github.ref_name }}.tar.gz -C .build/apple/Products/Release chatgpt
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create release and upload executable to release
+        uses: svenstaro/upload-release-action@v2
         with:
-          files: ${{ github.ref_name }}.tar.gz
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-          draft: false
-          prerelease: false
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ github.ref_name }}.tar.gz
+          asset_name: ${{ github.ref_name }}
+          tag: ${{ github.ref }}
+          overwrite: true
