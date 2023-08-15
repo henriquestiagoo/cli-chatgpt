@@ -4,11 +4,11 @@ A Swift CLI application to ask ChatGPT anything directly from the terminal.
 
 ## Installation
 
-You can install the app `directly from Github`.
+You can install the app `directly from GitHub`.
 
 ## Manually
 
-A new Github release is created each time a new version is available. You can download the latest version of the executable directly from the [releases page](https://github.com/henriquestiagoo/cli-chatgpt/releases).
+A new GitHub release is created each time a new version is available. You can download the latest version of the executable directly from the [releases page](https://github.com/henriquestiagoo/cli-chatgpt/releases).
 
 After getting the binary file, you can create a symlink to the executable for easy access.
 
