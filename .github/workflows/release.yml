@@ -21,12 +21,12 @@ jobs:
     - name: Install cross-compiler tool
       run: brew install keith/formulae/swiftpm-linux-cross
     - name: Setup toolchain
-      run: setup-swiftpm-toolchain --ubuntu-release focal --arch x86_64 --swift-version 5.6.2
+      run: setup-swiftpm-toolchain --ubuntu-release focal --arch x86_64 --swift-version 5.7.1
     - uses: swift-actions/setup-swift@v1
       with:
-        swift-version: "5.6.2"
+        swift-version: "5.7.1"
     - name: Cross compile
-      run: TOOLCHAINS=$(/usr/libexec/PlistBuddy -c "print :CFBundleIdentifier" /Users/runner/hostedtoolcache/swift-macOS/5.6.2/x64/Info.plist) swift build -c release --product chatgpt --static-swift-stdlib --destination toolchain-focal-x86_64-5.6.2/destination_static.json
+      run: TOOLCHAINS=$(/usr/libexec/PlistBuddy -c "print :CFBundleIdentifier" /Users/runner/hostedtoolcache/swift-macOS/5.7.1/x64/Info.plist) swift build -c release --product chatgpt --static-swift-stdlib --destination toolchain-focal-x86_64-5.7.1/destination_static.json
 
   #build-macos-executable:
     #name: Create Release
