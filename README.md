@@ -1,6 +1,6 @@
 # cli-chatgpt
 
-A Swift CLI application to ask ChatGPT anything directly from the terminal.
+A Swift CLI application written in Swift that interacts with the ChatGPT AI model.
 
 ## Installation
 
