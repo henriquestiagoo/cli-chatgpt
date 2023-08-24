@@ -8,9 +8,9 @@ name: Create Release
 
 on: push
 
-concurrency:
-  group: ${{ github.ref }}-${{ github.workflow }}
-  cancel-in-progress: true
+#concurrency:
+#  group: ${{ github.ref }}-${{ github.workflow }}
+#  cancel-in-progress: true
 
 jobs:
   build-windows-executable:
@@ -46,9 +46,9 @@ jobs:
     - name: Cross compile
       run: TOOLCHAINS=$(/usr/libexec/PlistBuddy -c "print :CFBundleIdentifier" /Users/runner/hostedtoolcache/swift-macOS/5.7.1/x64/Info.plist) swift build -c release --product chatgpt --static-swift-stdlib --destination toolchain-focal-x86_64-5.7.1/destination_static.json
 
-  build-macos-executable:
-    name: Create Release
-    runs-on: macos-latest
+  #build-macos-executable:
+    #name: Create Release
+    #runs-on: macos-latest
 
     #steps:
     #  - uses: actions/checkout@v3
