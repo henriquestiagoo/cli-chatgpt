@@ -1,28 +1,49 @@
 name: Create Release
 
-on:
-  push:
+#on:
+#  push:
     # Sequence of patterns matched against refs/tags
-    tags:
-      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+#    tags:
+#      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+on: push
+
+#concurrency:
+#  group: ${{ github.ref }}-${{ github.workflow }}
+#  cancel-in-progress: true
 
 jobs:
-  build:
-    name: Create Release
+  build-linux-executable:
+    name: Build Linux Executable
     runs-on: macos-latest
-
     steps:
-      - uses: actions/checkout@v3
-      - name: Build executable for release
-        run: swift build -c release --arch arm64 --arch x86_64 --product chatgpt
+    - uses: actions/checkout@v2
+    - name: Install cross-compiler tool
+      run: brew install keith/formulae/swiftpm-linux-cross
+    - name: Setup toolchain
+      run: setup-swiftpm-toolchain --ubuntu-release focal --arch x86_64 --swift-version 5.7.1
+    - uses: swift-actions/setup-swift@v1
+      with:
+        swift-version: "5.7.1"
+    - name: Cross compile
+      run: TOOLCHAINS=$(/usr/libexec/PlistBuddy -c "print :CFBundleIdentifier" /Users/runner/hostedtoolcache/swift-macOS/5.7.1/x64/Info.plist) swift build -c release --product chatgpt --static-swift-stdlib --destination toolchain-focal-x86_64-5.7.1/destination_static.json
 
-      - name: Compress archive
-        run: tar -czf ${{ github.ref_name }}.tar.gz -C .build/apple/Products/Release chatgpt
+  #build-macos-executable:
+    #name: Create Release
+    #runs-on: macos-latest
 
-      - name: Create release and upload executable to release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ github.ref_name }}.tar.gz
-          tag: ${{ github.ref }}
-          overwrite: true
+    #steps:
+    #  - uses: actions/checkout@v3
+    #  - name: Build executable for release
+    #    run: swift build -c release --arch arm64 --arch x86_64 --product chatgpt
+    #
+    #  - name: Compress archive
+    #    run: tar -czf ${{ github.ref_name }}.tar.gz -C .build/apple/Products/Release chatgpt
+    #
+    #  - name: Create release and upload executable to release
+    #    uses: svenstaro/upload-release-action@v2
+    #    with:
+    #      repo_token: ${{ secrets.GITHUB_TOKEN }}
+    #      file: ${{ github.ref_name }}.tar.gz
+    #      tag: ${{ github.ref }}
+    #      overwrite: true
