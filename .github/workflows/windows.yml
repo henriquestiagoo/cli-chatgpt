@@ -5,7 +5,8 @@ on:
     branches:
       - main
 
-  build-windows-executable:
+jobs:
+  build:
     name: Build Windows Executable
     runs-on: windows-latest
     steps:
