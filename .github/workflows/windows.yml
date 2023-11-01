@@ -1,0 +1,25 @@
+name: Create Windows Release
+
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+jobs:
+  build-windows-executable:
+    name: Build Windows Executable
+    runs-on: windows-latest
+    steps:
+      - uses: compnerd/gha-setup-swift@main
+        with:
+          branch: swift-5.7.1-release
+          tag: 5.7.1-RELEASE
+      - uses: actions/checkout@v4
+      - run: git config --global core.protectNTFS false
+      - run: swift build -c release --product chatgpt
+      - run: cp .build\release\chatgpt.exe chatgpt.exe
+      - uses: actions/upload-artifact@v3
+        with:
+          name: chatgpt-windows.exe
+          path: chatgpt.exe
