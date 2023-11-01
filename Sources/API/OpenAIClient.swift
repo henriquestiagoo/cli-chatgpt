@@ -44,8 +44,15 @@ public class OpenAIClient {
             ]
         )
         request.httpBody = try JSONEncoder().encode(chatCompletionRequest)
-        
-        let (data, _) = try await URLSession.shared.data(for: request)
+
+        var data: Data?
+        #if !os(Windows)
+        (data, _) = try await URLSession.shared.data(for: request)
+        #else
+        (data, _) = try await URLSession.shared.asyncData(from: request)
+        #endif
+
+        guard let data = data else { throw OpenAIError.noContent }
         let chatCompletionResponse = try JSONDecoder().decode(ChatCompletionResponse.self, from: data)
         
         let choices = chatCompletionResponse.choices
