@@ -6,8 +6,12 @@ on:
     tags:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
 jobs:
-  build:
+  build-mac-executable:
     name: Create Release
     runs-on: macos-latest
 
@@ -27,7 +31,7 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
 
-  build:
+  build-windows-executable:
     name: Build Windows Executable
     runs-on: windows-latest
     steps:
