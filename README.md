@@ -4,23 +4,31 @@ A Swift CLI application written in Swift that interacts with the ChatGPT AI mode
 
 ## Installation
 
-You can install the app using `homebrew` or `directly from GitHub`.
+You can install the app using `homebrew` for macOS, `directly from GitHub` source code or from a `direct download`.
 
-### Homebrew
+### Homebrew (macOS)
 
 ```bash
 brew install henriquestiagoo/homebrew-tap/cli-chatgpt
 ```
 
+### Direct Download
+
+For a quick and easy installation without compiling, you can directly download the pre-built binary for your operating system:
+
+#### macOS
+
+```shell
+curl -L -o chatgpt https://github.com/henriquestiagoo/cli-chatgpt/releases/download/v1.0.2/v1.0.2.tar.gz && chmod +x chatgpt && sudo mv chatgpt /usr/local/bin/
+```
+
+#### Windows
+
+Download [the binary](https://github.com/henriquestiagoo/cli-chatgpt/releases/download/v1.0.2/v1.0.2.exe.zip) and add it to your PATH.
+
 ### Manually
 
 A new GitHub release is created each time a new version is available. You can download the latest version of the executable directly from the [releases page](https://github.com/henriquestiagoo/cli-chatgpt/releases).
-
-After getting the binary file, you can create a symlink to the executable for easy access.
-
-```bash
-chmod +x chatgpt && sudo mv chatgpt /usr/local/bin/
-```
 
 ## Usage
 
