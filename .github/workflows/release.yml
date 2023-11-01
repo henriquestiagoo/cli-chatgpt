@@ -33,6 +33,7 @@ jobs:
 
   build-windows-executable:
     name: Build Windows Executable
+    needs: build-mac-executable
     runs-on: windows-latest
     steps:
       - uses: compnerd/gha-setup-swift@main
