@@ -26,3 +26,26 @@ jobs:
           file: ${{ github.ref_name }}.tar.gz
           tag: ${{ github.ref }}
           overwrite: true
+
+  build:
+    name: Build Windows Executable
+    runs-on: windows-latest
+    steps:
+      - uses: compnerd/gha-setup-swift@main
+        with:
+          branch: swift-5.7.1-release
+          tag: 5.7.1-RELEASE
+      - uses: actions/checkout@v4
+      - run: git config --global core.protectNTFS false
+      - run: swift build -c release --product chatgpt
+
+      - name: Compress archive
+        run: tar -czf ${{ github.ref_name }}_windows.tar.gz -C .build/release chatgpt.exe
+
+      - name: Create release and upload executable to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ github.ref_name }}_windows.tar.gz
+          tag: ${{ github.ref }}
+          overwrite: true
